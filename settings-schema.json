@@ -1,0 +1,100 @@
+{
+    "head-location": {
+        "type": "header",
+        "description": "Lokasi Jadwal Sholat"
+    },
+    
+    "city-name": {
+        "type": "entry",
+        "default": "KOTA PONTIANAK",
+        "description": "Nama Lokasi",
+        "tooltip": "Nama lokasi (contoh: Putussibau, Rumah, dll)"
+    },
+    
+    "coordinates": {
+        "type": "entry",
+        "default": "-0.087466, 109.347654",
+        "description": "Koordinat (lat, lng)",
+        "tooltip": "Format: latitude, longitude (contoh: -0.087466, 109.347654)"
+    },
+    
+    "separator1": {
+        "type": "separator"
+    },
+    
+    "head-display": {
+        "type": "header",
+        "description": "Pengaturan Display"
+    },
+    
+    "show-imsak": {
+        "type": "switch",
+        "default": true,
+        "description": "Tampilkan waktu Imsak",
+        "tooltip": "Tampilkan Imsak di popup menu"
+    },
+    
+    "separator2": {
+        "type": "separator"
+    },
+    
+    "head-adjustment": {
+        "type": "header",
+        "description": "Penyesuaian Waktu Sholat (menit)"
+    },
+    
+    "adjust-subuh": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": -60,
+        "max": 60,
+        "step": 1,
+        "units": "menit",
+        "description": "Subuh",
+        "tooltip": "Penyesuaian waktu Subuh dalam menit (+/-)"
+    },
+    
+    "adjust-dzuhur": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": -60,
+        "max": 60,
+        "step": 1,
+        "units": "menit",
+        "description": "Dzuhur",
+        "tooltip": "Penyesuaian waktu Dzuhur dalam menit (+/-)"
+    },
+    
+    "adjust-ashar": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": -60,
+        "max": 60,
+        "step": 1,
+        "units": "menit",
+        "description": "Ashar",
+        "tooltip": "Penyesuaian waktu Ashar dalam menit (+/-)"
+    },
+    
+    "adjust-maghrib": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": -60,
+        "max": 60,
+        "step": 1,
+        "units": "menit",
+        "description": "Maghrib",
+        "tooltip": "Penyesuaian waktu Maghrib dalam menit (+/-)"
+    },
+    
+    "adjust-isya": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": -60,
+        "max": 60,
+        "step": 1,
+        "units": "menit",
+        "description": "Isya",
+        "tooltip": "Penyesuaian waktu Isya dalam menit (+/-)"
+    }
+}

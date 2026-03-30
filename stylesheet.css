@@ -1,0 +1,49 @@
+/* Styling untuk Faghfirli Applet - Jadwal Sholat Pontianak */
+
+.faghfirli-applet {
+    spacing: 3px;
+}
+
+.faghfirli-applet .applet-label {
+    font-weight: bold;
+    color: #ffffff;
+    padding: 0 6px;
+}
+
+.faghfirli-applet:hover .applet-label {
+    color: #ffd700;
+}
+
+.faghfirli-blink {
+    background-color: rgba(255, 215, 0, 0.6);
+}
+
+.prayer-past {
+    color: #888888;
+}
+
+.prayer-next {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.prayer-adjusted {
+    color: #4fc3f7;
+}
+
+.prayer-adjusted .popup-menu-item-label {
+    color: #4fc3f7 !important;
+}
+
+/* Prayer row layout with left-right alignment */
+.prayer-row {
+    width: 280px;
+}
+
+.prayer-row .prayer-name-label {
+    text-align: left;
+}
+
+.prayer-row .prayer-time-label {
+    text-align: right;
+}

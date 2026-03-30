@@ -1,0 +1,8 @@
+{
+    "uuid": "faghfirli@rizky",
+    "name": "Faghfirli",
+    "description": "Jadwal sholat Pontianak dengan countdown dan notifikasi",
+    "version": "1.0",
+    "cinnamon-version": ["3.0", "4.0", "5.0", "6.0"],
+    "author": "Rizky"
+}
