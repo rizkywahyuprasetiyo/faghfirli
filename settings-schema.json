@@ -96,5 +96,25 @@
         "units": "menit",
         "description": "Isya",
         "tooltip": "Penyesuaian waktu Isya dalam menit (+/-)"
+    },
+    
+    "separator3": {
+        "type": "separator"
+    },
+    
+    "head-hijri": {
+        "type": "header",
+        "description": "Penyesuaian Tanggal Hijriyah"
+    },
+    
+    "hijri-adjustment": {
+        "type": "spinbutton",
+        "default": 0,
+        "min": -3,
+        "max": 3,
+        "step": 1,
+        "units": "hari",
+        "description": "Penyesuaian Tanggal",
+        "tooltip": "Tambah atau kurangi tanggal Hijriyah (+/- hari)"
     }
 }

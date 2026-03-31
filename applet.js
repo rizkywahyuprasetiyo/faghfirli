@@ -7,6 +7,21 @@ const Mainloop = imports.mainloop;
 const GLib = imports.gi.GLib;
 const Settings = imports.ui.settings;
 
+const HIJRI_MONTHS = [
+    { en: "Muharram", apiNames: ["Muharram"], days: 30 },
+    { en: "Safar", apiNames: ["Safar", "Ṣafar"], days: 29 },
+    { en: "Rabi al-Awwal", apiNames: ["Rabi al-Awwal", "Rabīʿ al-Awwal", "Rabi' al-Awwal"], days: 30 },
+    { en: "Rabi al-Thani", apiNames: ["Rabi al-Thani", "Rabīʿ al-Thānī", "Rabi' al-Thani"], days: 29 },
+    { en: "Jumada al-Awwal", apiNames: ["Jumada al-Awwal", "Jumādā al-Ula", "Jumada al-Ula"], days: 30 },
+    { en: "Jumada al-Thani", apiNames: ["Jumada al-Thani", "Jumādā al-Thāniyah", "Jumada al-Thaniyah"], days: 29 },
+    { en: "Rajab", apiNames: ["Rajab"], days: 30 },
+    { en: "Shaban", apiNames: ["Shaban", "Shaʿbān", "Sha'ban"], days: 29 },
+    { en: "Ramadan", apiNames: ["Ramadan", "Ramadān", "Ramadhan"], days: 30 },
+    { en: "Shawwal", apiNames: ["Shawwal", "Shawwāl"], days: 29 },
+    { en: "Dhul Qadah", apiNames: ["Dhul Qadah", "Dhū al-Qaʿdah", "Dzulqa'dah"], days: 30 },
+    { en: "Dhul Hijjah", apiNames: ["Dhul Hijjah", "Dhū al-Hijjah", "Dzulhijjah"], days: 30 }
+];
+
 function MyApplet(metadata, orientation, panel_height, instance_id) {
     this._init(metadata, orientation, panel_height, instance_id);
 }
@@ -44,6 +59,8 @@ MyApplet.prototype = {
         this.settings.bind("adjust-ashar", "_adjustAshar", this._onSettingsChanged.bind(this));
         this.settings.bind("adjust-maghrib", "_adjustMaghrib", this._onSettingsChanged.bind(this));
         this.settings.bind("adjust-isya", "_adjustIsya", this._onSettingsChanged.bind(this));
+        
+        this.settings.bind("hijri-adjustment", "_hijriAdjustment", this._onSettingsChanged.bind(this));
         
         this._parseCoordinates();
         
@@ -210,6 +227,58 @@ MyApplet.prototype = {
     _getHijriDateString: function(hijriDate) {
         if (!hijriDate) return "";
         return `${hijriDate.day} ${hijriDate.month.en} ${hijriDate.year} H`;
+    },
+
+    _applyHijriAdjustment: function(hijriDate) {
+        if (!hijriDate) return null;
+        
+        let adjustment = this._hijriAdjustment || 0;
+        if (adjustment === 0) return hijriDate;
+        
+        let day = parseInt(hijriDate.day, 10);
+        let year = parseInt(hijriDate.year, 10);
+        let monthIndex = -1;
+        let apiMonth = hijriDate.month.en;
+        
+        for (let i = 0; i < HIJRI_MONTHS.length; i++) {
+            if (HIJRI_MONTHS[i].apiNames.indexOf(apiMonth) !== -1) {
+                monthIndex = i;
+                break;
+            }
+        }
+        
+        if (monthIndex === -1) {
+            global.log("Faghfirli: Unknown hijri month: " + hijriDate.month.en);
+            return hijriDate;
+        }
+        
+        day += adjustment;
+        
+        while (day < 1) {
+            monthIndex--;
+            if (monthIndex < 0) {
+                monthIndex = 11;
+                year--;
+            }
+            day += HIJRI_MONTHS[monthIndex].days;
+        }
+        
+        while (day > HIJRI_MONTHS[monthIndex].days) {
+            day -= HIJRI_MONTHS[monthIndex].days;
+            monthIndex++;
+            if (monthIndex > 11) {
+                monthIndex = 0;
+                year++;
+            }
+        }
+        
+        return {
+            day: String(day).padStart(2, '0'),
+            month: {
+                en: HIJRI_MONTHS[monthIndex].en
+            },
+            year: String(year)
+        };
     },
 
     _parsePrayerTimes: function() {
@@ -530,9 +599,11 @@ MyApplet.prototype = {
         
         let hijriStr = "";
         if (isAfterMaghrib && this._hijriDateTomorrow) {
-            hijriStr = this._getHijriDateString(this._hijriDateTomorrow);
+            let adjustedHijri = this._applyHijriAdjustment(this._hijriDateTomorrow);
+            hijriStr = this._getHijriDateString(adjustedHijri);
         } else if (this._hijriDate) {
-            hijriStr = this._getHijriDateString(this._hijriDate);
+            let adjustedHijri = this._applyHijriAdjustment(this._hijriDate);
+            hijriStr = this._getHijriDateString(adjustedHijri);
         }
         
         if (hijriStr) {
