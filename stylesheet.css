@@ -14,8 +14,18 @@
     color: #ffd700;
 }
 
+.faghfirli-alert {
+    background-color: rgba(220, 53, 69, 0.75);
+    border-radius: 4px;
+}
+
+.faghfirli-alert .applet-label {
+    color: #ffffff;
+    font-weight: bold;
+}
+
 .faghfirli-blink {
-    background-color: rgba(255, 215, 0, 0.6);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .prayer-past {
@@ -35,7 +45,6 @@
     color: #4fc3f7 !important;
 }
 
-/* Prayer row layout with left-right alignment */
 .prayer-row {
     width: 280px;
 }
